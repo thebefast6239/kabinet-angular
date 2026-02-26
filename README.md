@@ -1,59 +1,111 @@
-# StpCourseproject
+# Веб-приложение «KABINET» — Система учета пациентов
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
+<p align="center">
+  <img src="path/to/your/main-logo-or-screenshot.png" alt="KABINET Logo" width="600">
+</p>
 
-## Development server
+## 📝 Введение
 
-To start a local development server, run:
+Курсовой проект представляет собой веб-приложение **«KABINET»**, разработанное для автоматизации учета пациентов. Проект реализован на фреймворке **Angular 20** с использованием **Material 3**, что обеспечивает современный интерфейс и высокую производительность.
 
-```bash
-ng serve
-```
+### Ключевой функционал:
+* **Администрирование:** Полный цикл CRUD-операций, валидация данных, управление медиа-контентом (аватары).
+* **Врачебный контур:** Дашборд для быстрого поиска, ведение медицинских заметок и «умная» фильтрация.
+* **Реактивность:** Использование парадигмы **Signals** для мгновенного обновления интерфейса.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🛠 Технологический стек
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Frontend
+* **Framework:** Angular 20 (Standalone Components)
+* **State Management:** Angular Signals
+* **UI Library:** Material 3 (Google Design System)
+* **Language:** TypeScript (Интерфейс `Patient`)
+* **Styles:** SCSS (иерархическая структура, дизайн-токены)
+* **Streams:** RxJS & HttpClient
 
-```bash
-ng generate component component-name
-```
+### Backend-as-a-Service
+* **API:** Mokky API (RESTful API, JSON-storage)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 📐 Проектирование
 
-## Building
+### Use-case диаграмма
+Описывает взаимодействие ролей Врача и Администратора с системой.
+<p align="center">
+  <img src="path/to/use-case-diagram.png" alt="Use-case диаграмма">
+  <br><i>Рисунок 1 – Use-case диаграмма</i>
+</p>
 
-To build the project run:
+### Функциональная диаграмма
+<p align="center">
+  <img src="path/to/functional-diagram.png" alt="Функциональная диаграмма">
+  <br><i>Рисунок 2 – Функциональная диаграмма</i>
+</p>
 
-```bash
-ng build
-```
+### Диаграмма сущностей (ER-диаграмма)
+<p align="center">
+  <img src="path/to/entity-diagram.png" alt="Диаграмма сущностей">
+  <br><i>Рисунок 3 – Диаграмма сущностей</i>
+</p>
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 💻 Итоговый результат
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Модуль Врача (`/doctor`)
+Интерфейс для работы с базой пациентов и ведения заметок.
+<p align="center">
+  <img src="path/to/screenshot-4-1.png" width="45%" alt="Кабинет врача">
+  <img src="path/to/screenshot-4-2.png" width="45%" alt="Заметки врача">
+  <br><i>Рисунок 4.1 и 4.2 — Интерфейс врача и редактирование заметок</i>
+</p>
 
-```bash
-ng test
-```
+### Панель Администратора (`/client`)
+Полное управление реестром и CRUD-функции.
+<p align="center">
+  <img src="path/to/screenshot-5-1.png" width="80%" alt="Панель администратора">
+  <br><i>Рисунок 5.1 – Панель администратора</i>
+</p>
 
-## Running end-to-end tests
+### Просмотр и редактирование
+<p align="center">
+  <img src="path/to/screenshot-5-2-2.png" width="45%" alt="Просмотр клиента">
+  <img src="path/to/screenshot-5-3-2.png" width="45%" alt="Редактирование">
+  <br><i>Рисунок 5.2.2 и 5.3.2 — Карточка пациента и форма редактирования</i>
+</p>
 
-For end-to-end (e2e) testing, run:
+### Поиск и фильтрация
+Реализован мгновенный поиск по фамилии и фильтр по демографическим признакам.
+<p align="center">
+  <img src="path/to/screenshot-5-6-2.png" width="45%" alt="Поиск по фамилии">
+  <img src="path/to/screenshot-5-6-3.png" width="45%" alt="Фильтр по полу">
+  <br><i>Рисунок 5.6.2 и 5.6.3 — Работа фильтров</i>
+</p>
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🏁 Заключение
 
-## Additional Resources
+В результате работы создана полностью работоспособная система, поддерживающая разграничение ролей и современные паттерны веб-разработки. 
+**Перспективы развития:**
+- Внедрение календаря записей.
+- Автоматическая генерация отчетности.
+- Офлайн-кэширование данных.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## 📚 Список литературы
+
+1. **Черный Б.** Программируй на TypeScript. — СПб.: Питер, 2021.
+2. [Angular Documentation](https://angular.dev/)
+3. [Angular Material Documentation](https://material.angular.io/)
+4. [Mokky API Documentation](https://docs.mokky.dev/)
+5. [Современный учебник JavaScript](https://learn.javascript.ru/)
+
+---
+
+## 🔗 Ссылки
+* **GitHub Repository:** [https://github.com/thebefast6239/kabinet-angular](https://github.com/thebefast6239/kabinet-angular)
