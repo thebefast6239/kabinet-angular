@@ -1,0 +1,111 @@
+// Базовый контейнер на весь экран
+.sidenav-container {
+  height: 100vh;
+  background-color: var(--mat-sys-surface);
+}
+
+// Стили боковой панели
+.sidenav {
+  width: 280px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface-container-low);
+  display: flex;
+  flex-direction: column;
+
+  .sidenav-header {
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--mat-sys-primary);
+    cursor: pointer;
+
+    mat-icon {
+      transform: scale(1.2);
+    }
+
+    span {
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+// Список навигации
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 12px;
+    color: var(--mat-sys-on-surface-variant);
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-surface-container-high);
+    }
+
+    // Твоя активная ссылка в стиле Material 3
+    &.active-link {
+      background-color: var(--mat-sys-primary-container) !important;
+      color: var(--mat-sys-on-primary-container) !important;
+      font-weight: 600;
+
+      mat-icon {
+        color: var(--mat-sys-primary);
+      }
+    }
+  }
+}
+
+// Правая часть (Верхняя панель + Контент)
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  background-color: var(--mat-sys-surface-container-lowest);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  .menu-btn {
+    margin-right: 8px;
+  }
+}
+
+.content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px 24px 24px;
+  background-color: var(--mat-sys-surface); // или var(--mat-sys-surface-container-lowest)
+}
+
+// Адаптив для мобилок
+@media (max-width: 600px) {
+  .sidenav {
+    width: 240px;
+  }
+
+  .content-wrapper {
+    padding: 16px;
+  }
+}

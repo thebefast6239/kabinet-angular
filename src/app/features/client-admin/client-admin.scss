@@ -1,0 +1,261 @@
+// 1. Копируем переменные и заголовок из доктора
+.container {
+  padding: 0 1rem 1rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  height: auto !important;
+  padding: 16px 24px;
+  background-color: var(--mat-sys-surface-container-lowest) !important;
+  margin-bottom: 24px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  .main-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    h1 { margin: 0; font-size: 1.5rem; font-weight: 500; color: var(--mat-sys-on-surface); }
+    mat-icon { color: var(--mat-sys-primary); }
+  }
+  .stats-badge {
+    font-size: 0.85rem;
+    color: var(--mat-sys-on-surface-variant);
+    margin-top: 6px;
+    strong { color: var(--mat-sys-primary); background: var(--mat-sys-primary-container); padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; }
+  }
+}
+
+.spacer { flex: 1 1 auto; }
+
+// 2. Сетка
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+// 3. ПЕРЕПИСЫВАЕМ ТВОИ КЛАССЫ АДМИНКИ ПОД СТИЛЬ ДОКТОРА
+.modern-card {
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant); // Тонкая рамка как у доктора
+  border-radius: 16px !important; // Скругление как у доктора
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  box-shadow: none !important;
+
+  &:hover {
+    border-color: var(--mat-sys-primary);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05) !important;
+    transform: translateY(-2px);
+  }
+}
+
+// Твоя верхняя часть (clickable area) теперь выглядит как card-top
+.card-clickable-area {
+  padding: 20px;
+  cursor: pointer;
+  flex-grow: 1;
+
+  .card-main-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .patient-avatar {
+      width: 52px; // Размер как у доктора
+      height: 52px;
+      border-radius: 14px; // Квадратно-скругленный как у доктора
+      object-fit: cover;
+    }
+
+    .patient-name {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--mat-sys-on-surface);
+      text-transform: uppercase; // Капс как у доктора
+    }
+
+    .patient-meta {
+      font-size: 0.95rem;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}
+
+// Твое тело карточки с диагнозом
+.card-body {
+  .diagnosis-label {
+    font-size: 0.75rem;
+    color: var(--mat-sys-outline);
+    display: block;
+    margin-bottom: 4px;
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  .diagnosis-text {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.5;
+    line-clamp: 2;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    }
+}
+
+// 4. ТВОЯ НИЖНЯЯ ПАНЕЛЬ (card-actions-panel)
+.card-actions-panel {
+  background: var(--mat-sys-surface-container-lowest) !important; // Фон как у кнопки доктора
+  padding: 8px 16px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0px solid var(--mat-sys-outline-variant);
+  margin: 0 !important;
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+
+    // Стилизуем иконки, чтобы они не выбивались
+    button {
+      color: var(--mat-sys-primary);
+      &:hover { background: var(--mat-sys-primary-container); }
+    }
+  }
+
+  .delete-btn {
+    color: var(--mat-sys-error) !important;
+    &:hover { background: var(--mat-sys-error-container) !important; }
+  }
+}
+
+// Убираем стандартный отступ Material, если он есть
+mat-card-header { padding: 0 !important; }
+
+// searchbar
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; // Важно для выравнивания
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .search-container {
+    // Убираем нижний отступ, который толкает сетку вниз
+    margin-bottom: 0;
+    flex: 1;
+    max-width: 400px;
+
+    .search-field {
+      width: 100%;
+      // Убираем "дырку" снизу под инпутом (subscript wrapper)
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+
+  .gender-toggle {
+      border: 1px solid var(--mat-sys-outline-variant) !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      background: var(--mat-sys-surface-container-lowest);
+      // Высота должна совпадать с высотой mat-form-field (обычно 56px)
+      height: 56px;
+      display: inline-flex; // Важно: inline-flex не дает растягиваться на всю ширину, если не надо
+      align-items: center;
+
+      mat-button-toggle {
+        border-left: 1px solid var(--mat-sys-outline-variant);
+        height: 100% !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:first-child { border-left: none; }
+
+        ::ng-deep {
+          // 1. Растягиваем саму кнопку внутри оболочки
+          .mat-mdc-button-toggle-button {
+            height: 100% !important;
+            display: flex !important;
+            align-items: center;
+            padding: 0 16px !important;
+          }
+
+          // 2. Растягиваем контент (текст и иконки)
+          .mat-mdc-button-toggle-label-content {
+            line-height: normal !important; // Сбрасываем line-height, центрируем через flex
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+
+          // 3. Убираем лишние отступы MDC, которые могут мешать клику
+          .mat-mdc-button-toggle-focus-overlay {
+            height: 100% !important;
+          }
+        }
+
+        &.mat-button-toggle-checked {
+          background-color: var(--mat-sys-primary-container) !important;
+          color: var(--mat-sys-on-primary-container) !important;
+        }
+      }
+    }
+  }
+
+.empty-state {
+  grid-column: 1 / -1; // На всю ширину
+  text-align: center;
+  padding: 40px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-container { flex-direction: column; align-items: flex-start !important; gap: 16px; }
+  .spacer { display: none; }
+}

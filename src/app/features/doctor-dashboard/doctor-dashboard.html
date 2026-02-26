@@ -1,0 +1,110 @@
+<div class="container">
+  <mat-toolbar class="page-header mat-elevation-z2">
+      <div class="header-container">
+
+        <div class="title-group">
+          <div class="main-title">
+            <mat-icon>medical_services</mat-icon>
+            <h1>Кабинет врача</h1>
+          </div>
+          <span class="subtitle">
+            Пациентов: <strong>{{ allPatients().length }}</strong>
+          </span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="actions">
+          <button mat-icon-button
+                  matTooltip="Обновить список"
+                  (click)="ngOnInit()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+
+    <!-- SEARCHBAR -->
+    <div class="filter-row">
+      <div class="search-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Поиск пациента</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            placeholder="Начните вводить имя..."
+            (input)="onSearchChange($event)">
+          @if (searchQuery()) {
+            <button mat-icon-button matSuffix (click)="clearSearch()">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+      </div>
+      <mat-button-toggle-group
+        [value]="genderFilter()"
+        (change)="setGenderFilter($event.value)"
+        appearance="standard"
+        class="gender-toggle">
+        <mat-button-toggle value="all">Все</mat-button-toggle>
+        <mat-button-toggle value="male">♂️М</mat-button-toggle>
+        <mat-button-toggle value="female">♀️Ж</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+  <div class="patient-grid">
+    @for (user of filteredPatients(); track user.id) {
+      <div class="minimal-card">
+        <div class="card-top"
+          [routerLink]="['/doctor/view', user.id]"
+          matRipple>
+          <div class="user-row">
+            <img [src]="user.avatar" class="u-avatar">
+            <h3 class="patient-name">{{ user.surname }} {{ user.name }}</h3>
+            <div class="u-badge" [class.has-comment]="user.comment">
+               {{ user.comment ? 'Заполнено' : 'Ожидает' }}
+            </div>
+          </div>
+
+          <div class="u-info-row">
+            <div class="info-item">
+              <span class="label">Пол</span>
+              <span class="value">{{ user.gender === 'male' ? '♂️Муж.' : '♀️Жен.' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Дата рожд.</span>
+              <span class="value">{{ user.birthdate | date:'dd.MM.yyyy' }}</span>
+            </div>
+          </div>
+
+          <div class="u-diagnosis">
+            <span class="label">Диагноз</span>
+            <p>{{ user.description || '—' }}</p>
+          </div>
+
+          <div class="u-comment">
+            <span class="label">Комментарий</span>
+            <p>{{ user.comment ? user.comment : 'Отсутствует' }}</p>
+          </div>
+        </div>
+
+          <div class="card-actions-panel">
+            <div class="action-buttons-wrapper">
+              <button mat-button
+                      [routerLink]="['/doctor/comment', user.id]"
+                      class="edit-comment-btn">
+                <mat-icon>edit_note</mat-icon>
+                <span>Оставить заметку</span>
+              </button>
+            </div>
+          </div>
+      </div>
+    }
+    @empty {
+      <div class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <p>Пациент с таким именем или фамилией не найден</p>
+      </div>
+    }
+  </div>
+</div>

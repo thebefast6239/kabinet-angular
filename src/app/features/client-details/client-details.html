@@ -1,0 +1,83 @@
+@if (patient(); as p) {
+
+  <div class="edit-container mat-elevation-z2">
+    <div class="patient-info">
+      <div class="patient-avatar-only">
+        @if (p.avatar) {
+          <div class="avatar-preview">
+            <img [src]="p.avatar" alt="Avatar" class="patient-avatar-img mat-elevation-z1">
+          </div>
+        }
+      </div>
+
+      <div class="patient-box">
+        <div class="header-with-icon">
+          <mat-icon color="primary">account_circle</mat-icon>
+          <h3>Данные пациента</h3>
+        </div>
+
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>person</mat-icon>
+            <div matListItemTitle>Фамилия и имя</div>
+            <div matListItemLine>{{ p.name }} {{ p.surname }}</div>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>
+              {{ p.gender === 'male' ? 'male' : 'female' }}
+            </mat-icon>
+            <div matListItemTitle>Пол</div>
+            <div matListItemLine>
+              {{ p.gender === 'male' ? 'Мужской' : 'Женский' }}
+            </div>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item>
+            <mat-icon matListItemIcon>calendar_today</mat-icon>
+            <div matListItemTitle>Дата рождения</div>
+            <div matListItemLine>{{ p.birthdate | date:'dd.MM.yyyy' }}</div>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+
+          <mat-list-item class="auto-height">
+            <mat-icon matListItemIcon>description</mat-icon>
+            <div matListItemTitle>Описание</div>
+            <div matListItemLine class="multiline-text">
+              {{ p.description || 'Описание отсутствует' }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
+    <!-- zametka -->
+    <div class="form-group">
+      <label for="comment">Заметка врача:</label>
+
+      @if (isReadonly()) {
+        <div class="readonly-comment">{{ p.comment }}</div>
+      } @else {
+        <textarea
+          id="comment"
+          [(ngModel)]="p.comment"
+          rows="6">
+        </textarea>
+      }
+    </div>
+
+    <div class="actions">
+      @if (!isReadonly()) {
+        <button class="save-btn" (click)="save()">Сохранить изменения</button>
+      }
+      <a class="cancel-btn" [routerLink]="isReadonly() ? '/client' : '/doctor'">
+        {{ isReadonly() ? 'Назад' : 'Отмена' }}
+      </a>
+    </div>
+  </div>
+}

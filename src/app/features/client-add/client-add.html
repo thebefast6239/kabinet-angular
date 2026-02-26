@@ -1,0 +1,81 @@
+<form #patientForm="ngForm" class="edit-container mat-elevation-z2">
+  <div class="patient-info">
+    <div class="header">
+      <mat-icon color="primary">person_add</mat-icon>
+      <h3>Регистрация нового пациента</h3>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Имя</mat-label>
+      <input matInput name="name" [(ngModel)]="patient().name" required #nameField="ngModel">
+      @if (nameField.invalid && nameField.touched) {
+        <mat-error>Имя обязательно</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Фамилия</mat-label>
+      <input matInput name="surname" [(ngModel)]="patient().surname" required #surnameField="ngModel">
+      @if (surnameField.invalid && surnameField.touched) {
+        <mat-error>Фамилия обязательна</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="radio-group-container">
+      <label>Пол:</label>
+      <mat-radio-group name="gender" [(ngModel)]="patient().gender" required>
+        <mat-radio-button value="male">Мужчина</mat-radio-button>
+        <mat-radio-button value="female">Женщина</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width" (click)="picker.open()">
+      <mat-label>Дата рождения</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        name="birthdate"
+        [(ngModel)]="patient().birthdate"
+        required
+        readonly
+        placeholder="Выберите дату">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>Укажите дату рождения</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>URL Аватара</mat-label>
+      <input matInput type="url" name="avatar" [(ngModel)]="patient().avatar" #avatarField="ngModel" pattern="https?://.+">
+      <button type="button" mat-icon-button matSuffix (click)="generateRandomAvatar()" title="Сгенерировать случайный аватар">
+      <mat-icon>casino</mat-icon> </button>
+      <mat-hint>Например: https://image.com/photo.jpg</mat-hint>
+      @if (avatarField.invalid) {
+        <mat-error>Введите корректный URL</mat-error>
+      }
+    </mat-form-field>
+
+    @if (patient().avatar) {
+      <div class="avatar-preview-container">
+        <img [src]="patient().avatar" alt="Preview" class="avatar-preview">
+      </div>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Описание (анамнез)</mat-label>
+      <textarea matInput name="description" rows="3" [(ngModel)]="patient().description"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="createPatient()"
+      [disabled]="patientForm.invalid">
+      <mat-icon>person_add</mat-icon> Добавить пациента
+    </button>
+
+    <a mat-button routerLink="/doctor">Отмена</a>
+  </div>
+</form>

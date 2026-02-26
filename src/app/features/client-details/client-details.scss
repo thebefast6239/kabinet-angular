@@ -1,0 +1,212 @@
+.edit-container {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 32px;
+  border-radius: 24px;
+  // Используем системный фон поверхности
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--mat-sys-level2-shadow);
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+
+    .mini-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px; // Квадратно-скругленный стиль
+      background: var(--mat-sys-surface-container-high);
+      object-fit: cover;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--mat-sys-on-surface);
+    }
+  }
+
+  // Секция с инфой о пациенте (неизменяемая)
+  .info-section {
+    background: var(--mat-sys-surface-container-low);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 1px solid var(--mat-sys-outline-variant);
+
+    p {
+      margin: 8px 0;
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+
+      &::before {
+        content: attr(data-label); // Можно передавать метку через атрибут
+        font-weight: 600;
+        color: var(--mat-sys-outline);
+      }
+    }
+  }
+
+  // Группа формы (поля ввода)
+  .form-group {
+  margin-bottom: 20px;
+  width: 100%; // Гарантируем ширину контейнера
+  box-sizing: border-box;
+
+  textarea {
+      width: 100%;
+      box-sizing: border-box; // КРИТИЧНО: вгоняет padding внутрь 100% ширины
+      display: block;        // Убирает лишние зазоры снизу
+
+      background: var(--mat-sys-surface);
+      border: 1px solid var(--mat-sys-outline);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 1rem;
+      color: var(--mat-sys-on-surface);
+      transition: all 0.2s;
+
+      // Предотвращаем горизонтальное растягивание пользователем
+      resize: vertical;
+
+      &:focus {
+        outline: none;
+        border-color: var(--mat-sys-primary);
+        box-shadow: 0 0 0 3px var(--mat-sys-primary-container);
+      }
+    }
+  }
+
+  // Кнопки действий
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+
+    // Стилизуем под mat-buttons, если это обычные кнопки
+    button, .cancel-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .save-btn {
+      flex: 2;
+      background: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+      &:hover { opacity: 0.9; transform: translateY(-1px); }
+    }
+
+    .cancel-btn {
+      flex: 1;
+      background: var(--mat-sys-surface-container-high);
+      color: var(--mat-sys-on-surface-variant);
+      text-decoration: none;
+      border: 1px solid var(--mat-sys-outline-variant);
+      &:hover { background: var(--mat-sys-surface-container-highest); }
+    }
+  }
+}
+
+// Поправка для аватара в превью
+.avatar-preview {
+  .patient-avatar-img {
+    width: 180px;
+    border: 4px solid var(--mat-sys-surface-container-high);
+    box-shadow: var(--mat-sys-level1-shadow);
+  }
+}
+
+.patient-info {
+    display: flex;
+    flex-direction: row; // В ряд
+    gap: 32px;           // Отступ между аватаркой и текстом
+    margin-bottom: 32px;
+    align-items: flex-start; // Прижать к верху
+
+    .patient-avatar-only {
+      flex: 0 0 auto; // Не даем аватарке сжиматься
+
+      .avatar-preview {
+        margin-top: 0; // Убираем лишний отступ сверху
+
+        .patient-avatar-img {
+          width: 180px;
+          height: 180px; // Делаем квадратной
+          object-fit: cover;
+          border-radius: 20px; // Скругление в стиле карточек
+          border: 1px solid var(--mat-sys-outline-variant);
+          display: block;
+        }
+      }
+    }
+
+    .patient-box {
+      flex: 1 1 auto; // Занимает всё оставшееся пространство
+      min-width: 0;   // Важно для предотвращения переполнения из-за длинного текста
+
+      .header-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        color: var(--mat-sys-primary);
+
+        h3 {
+          margin: 0;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: var(--mat-sys-on-surface);
+        }
+      }
+
+      // Стилизация списка Material внутри бокса
+      mat-list {
+        padding: 0;
+
+        mat-list-item {
+          --mdc-list-active-indicator-color: transparent;
+          height: auto !important;
+          min-height: 48px;
+          padding: 8px 0 !important;
+
+          ::ng-deep .mdc-list-item__content {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+
+  .readonly-comment {
+    display: block;
+    width: 100%;    // Занимает всю ширину родителя
+    box-sizing: border-box; // ВАЖНО: включает padding в 100% ширины
+    background: var(--mat-sys-surface-container-low);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--mat-sys-outline-variant);
+    color: var(--mat-sys-on-surface-variant);
+    white-space: pre-wrap;
+    min-height: 100px;
+
+    // Решение проблемы выхода за границы:
+    max-width: 100%;       // Не дает блоку стать шире родителя
+    overflow-wrap: break-word; // Разрывает длинные слова (ссылки, длинные термины)
+    word-break: break-word;
+    box-sizing: border-box; // Учитывает padding в общей ширине
+  }
+}

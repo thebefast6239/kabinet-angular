@@ -1,0 +1,484 @@
+// Общий контейнер для страниц
+.container {
+  padding: 0 1rem 1rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Единый стиль для хедера (mat-toolbar)
+.page-header {
+  height: auto !important;
+  padding: 16px 24px;
+  background-color: var(--mat-sys-surface-container-lowest) !important;
+  margin-bottom: 24px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+
+  .main-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--mat-sys-on-surface);
+      letter-spacing: -0.5px;
+    }
+
+    mat-icon {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .subtitle, .stats-badge {
+    font-size: 0.85rem;
+    color: var(--mat-sys-on-surface-variant);
+    margin-top: 6px;
+    strong { color: var(--mat-sys-primary); background: var(--mat-sys-primary-container); padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; }
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+// Сетка карточек
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+// Базовый стиль карточки (общий для всех)
+.mat-card-base {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: var(--mat-sys-surface);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+  }
+
+  mat-card-header {
+    margin-bottom: 16px;
+  }
+
+  mat-card-content {
+    flex-grow: 1;
+  }
+
+  h3.patient-name {
+    color: var(--mat-sys-primary);
+  }
+}
+
+// Стили текста внутри карточек
+.description-text {
+  font-size: 0.9rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 12px;
+
+  line-clamp: 2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.comment-box {
+  padding: 10px;
+  background-color: var(--mat-sys-surface-container-low);
+  border-radius: 6px;
+  border-left: 4px solid var(--mat-sys-outline-variant);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+// Группа кнопок внизу
+.actions-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px !important;
+  background: var(--mat-sys-surface-container-lowest);
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+// Состояние пустой загрузки
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  color: var(--mat-sys-outline);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+  }
+}
+
+// // // // PATIENT CARD
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.minimal-card {
+  background: var(--mat-sys-surface-container-lowest);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  overflow: hidden;
+
+  &:hover {
+    border-color: var(--mat-sys-primary);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+}
+
+.card-top {
+  padding: 20px;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  position: relative;
+
+  .u-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--mat-sys-surface-container-high);
+    object-fit: cover;
+  }
+
+  .u-name-block {
+    flex-grow: 1;
+    .u-surname { font-weight: 700; font-size: 1.1rem; color: var(--mat-sys-on-surface); text-transform: uppercase; }
+    .u-name { color: var(--mat-sys-on-surface-variant); font-size: 0.95rem; }
+  }
+
+  .u-badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.has-comment {
+      background: var(--mat-sys-primary-container);
+      color: var(--mat-sys-on-primary-container);
+    }
+  }
+
+  .patient-name {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--mat-sys-on-surface);
+      text-transform: uppercase;
+    }
+}
+
+.u-info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    .label { font-size: 0.75rem; color: var(--mat-sys-outline); margin-bottom: 2px; }
+    .value { font-size: 0.9rem; font-weight: 500; color: var(--mat-sys-on-surface-variant); }
+  }
+}
+
+.u-diagnosis {
+  .label { font-size: 0.75rem; color: var(--mat-sys-outline); display: block; margin-bottom: 4px; }
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.5;
+    line-clamp: 2;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    }
+}
+
+.u-comment {
+  margin-top: 12px;
+
+  .label {
+    font-size: 0.75rem;
+    color: var(--mat-sys-outline);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.5;
+    line-clamp: 2;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    }
+}
+
+// Кнопка внизу
+.action-bar-btn {
+  width: 100%;
+  border: none;
+  background: var(--mat-sys-surface-container-lowest);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--mat-sys-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+  &:hover {
+    background: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+// comment
+.comment-preview {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  background: var(--mat-sys-primary-container);
+  padding: 8px 12px;
+  border-radius: 8px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--mat-sys-on-primary-container);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--mat-sys-on-primary-container);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// Кнопка с текстом внизу карточки
+.edit-comment-btn {
+  border-radius: 20px !important;
+  font-size: 0.85rem !important;
+  padding: 0 16px !important;
+
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+.card-status {
+  padding-right: 8px;
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+  // Адаптивность
+  @media (max-width: 600px) {
+    .header-container {
+      flex-direction: column;
+      align-items: flex-start !important;
+      gap: 16px;
+    }
+    .spacer { display: none; }
+  }
+
+.card-actions-panel {
+  background: var(--mat-sys-surface-container-lowest);
+  padding: 8px 12px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  display: flex;
+  justify-content: center; // Центрируем кнопку
+
+  .edit-comment-btn {
+    width: 100%; // Кнопка на всю ширину панели
+    height: 40px;
+    border-radius: 12px !important;
+    color: var(--mat-sys-primary);
+
+    // Стилизуем иконку и текст внутри
+    ::ng-deep .mat-mdc-button-touch-target {
+      display: none; // Убираем лишний отступ Material
+    }
+
+    mat-icon {
+      margin-right: 8px;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-primary-container) !important;
+    }
+  }
+}
+
+  :host {
+    .mat-icon {
+      width: 22px;
+      height: 22px;
+      font-size: 22px;
+      color: var(--mat-sys-outline);
+      vertical-align: middle;
+    }
+  }
+
+
+// searchbar
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; // Важно для выравнивания
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .search-container {
+    // Убираем нижний отступ, который толкает сетку вниз
+    margin-bottom: 0;
+    flex: 1;
+    max-width: 400px;
+
+    .search-field {
+      width: 100%;
+      // Убираем "дырку" снизу под инпутом (subscript wrapper)
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+
+  .gender-toggle {
+    border: 1px solid var(--mat-sys-outline-variant) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    background: var(--mat-sys-surface-container-lowest);
+    height: 56px;
+    display: flex;
+
+    mat-button-toggle {
+      border-left: 1px solid var(--mat-sys-outline-variant);
+      flex: 1; // Чтобы кнопки поровну делили место
+      height: 100%;
+
+      &:first-child { border-left: none; }
+
+      // ВОТ ЭТА ЧАСТЬ ЧИНИТ КЛИК:
+      ::ng-deep {
+        .mat-button-toggle-label-content {
+          line-height: 54px !important; // Центрирует текст вертикально
+          padding: 0 16px !important;
+          display: block;
+          height: 100%; // Растягивает контент на всю высоту
+        }
+
+        button.mat-button-toggle-button {
+          height: 100% !important; // Растягивает реальную кнопку внутри
+          width: 100%;
+        }
+      }
+
+      &.mat-button-toggle-checked {
+        background-color: var(--mat-sys-primary-container) !important;
+        color: var(--mat-sys-on-primary-container) !important;
+      }
+    }
+  }
+}
+
+.empty-state {
+  grid-column: 1 / -1; // На всю ширину
+  text-align: center;
+  padding: 40px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}

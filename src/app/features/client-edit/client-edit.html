@@ -1,0 +1,96 @@
+
+@if (patient(); as p) {
+<form #patientForm="ngForm" class="edit-container mat-elevation-z2">
+  <div class="patient-info">
+    <h3>Данные пациента</h3>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Имя</mat-label>
+      <input matInput name="name" [(ngModel)]="p.name" required #nameField="ngModel">
+      @if (nameField.invalid && nameField.touched) {
+        <mat-error>Имя обязательно для заполнения</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Фамилия</mat-label>
+      <input matInput name="surname" [(ngModel)]="p.surname" required #surnameField="ngModel">
+      @if (surnameField.invalid && surnameField.touched) {
+        <mat-error>Фамилия обязательна</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="radio-group-container">
+      <label>Пол:</label>
+      <mat-radio-group name="gender" [(ngModel)]="p.gender" required>
+        <mat-radio-button value="male">Мужчина</mat-radio-button>
+        <mat-radio-button value="female">Женщина</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width" (click)="picker.open()">
+      <mat-label>Дата рождения</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        name="birthdate"
+        [(ngModel)]="p.birthdate"
+        required
+        readonly
+        placeholder="Выберите дату">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error>Укажите дату рождения</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>URL Аватара</mat-label>
+      <input matInput type="url" name="avatar" [(ngModel)]="p.avatar" #avatarField="ngModel" pattern="https?://.+">
+      <button type="button" mat-icon-button matSuffix (click)="generateRandomAvatar()" title="Сгенерировать случайный аватар">
+      <mat-icon>casino</mat-icon> </button>
+      <mat-hint>Например: https://image.com/photo.jpg</mat-hint>
+      @if (avatarField.invalid) {
+        <mat-error>Введите корректный URL (http/https)</mat-error>
+      }
+    </mat-form-field>
+
+    @if (patient().avatar) {
+      <div class="avatar-preview-container">
+        <img [src]="patient().avatar" alt="Preview" class="avatar-preview">
+      </div>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Описание</mat-label>
+      <textarea matInput name="description" rows="3" [(ngModel)]="p.description"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="form-group">
+    <p><strong>Заметка врача:</strong></p>
+    @if (isReadonly()) {
+      <div class="readonly-comment">{{ p.comment || 'Заметок нет' }}</div>
+    } @else {
+      <mat-form-field appearance="fill" class="full-width">
+        <textarea matInput name="comment" [(ngModel)]="p.comment" rows="5" placeholder="Введите заметку..."></textarea>
+      </mat-form-field>
+    }
+  </div>
+
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="savePatient()"
+      [disabled]="patientForm.invalid">
+      <mat-icon>save</mat-icon> Сохранить
+    </button>
+
+    <a mat-button [routerLink]="isReadonly() ? '/client' : '/doctor'">
+      {{ isReadonly() ? 'Назад' : 'Отмена' }}
+    </a>
+  </div>
+</form>
+} @else {
+  <div class="loading-spinner">Загрузка данных...</div>
+}
